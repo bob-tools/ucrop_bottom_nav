@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 apply from: '../mavenpush.gradle'
 
 android {
-    compileSdk 33
+    compileSdk 34
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 33
-        versionCode 26
-        versionName "2.2.8-native"
+        targetSdkVersion 34
+        versionCode 27
+        versionName "2.3.0-native"
 
         vectorDrawables.useSupportLibrary = true
     }
@@ -37,6 +37,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:${androidx_appcompat_version}"
     implementation "androidx.exifinterface:exifinterface:${androidx_exifinterface_version}"
     implementation "androidx.transition:transition:${androidx_transition_version}"
+    implementation "com.google.android.material:material:${material_version}"
     // OkHttp3 versions above 3.12.x don't support pre-Lollipop Android versions (API 21)
     implementation "com.squareup.okhttp3:okhttp:3.12.13"
 }

@@ -2,6 +2,7 @@ package com.yalantis.ucrop;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
@@ -25,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.yalantis.ucrop.callback.BitmapCropCallback;
 import com.yalantis.ucrop.model.AspectRatio;
 import com.yalantis.ucrop.util.SelectedStateListDrawable;
@@ -299,10 +301,11 @@ public class UCropActivity extends AppCompatActivity {
         mShowBottomControls = !intent.getBooleanExtra(UCrop.Options.EXTRA_HIDE_BOTTOM_CONTROLS, false);
         mRootViewBackgroundColor = intent.getIntExtra(UCrop.Options.EXTRA_UCROP_ROOT_VIEW_BACKGROUND_COLOR, ContextCompat.getColor(this, R.color.ucrop_color_crop_background));
 
-        setupAppBar();
+
         initiateRootViews();
 
         if (mShowBottomControls) {
+            setupAppBar();
 
             ViewGroup viewGroup = findViewById(R.id.ucrop_photobox);
             ViewGroup wrapper = viewGroup.findViewById(R.id.controls_wrapper);
@@ -327,7 +330,22 @@ public class UCropActivity extends AppCompatActivity {
             setupRotateWidget();
             setupScaleWidget();
             setupStatesWrapper();
+        } else {
+            //If not showing bottom controls, lets move submit button to fab
+            findViewById(R.id.toolbar).setVisibility(View.GONE);
+            setupFab();
         }
+    }
+
+    private void setupFab() {
+        FloatingActionButton fab = findViewById(R.id.fab_crop);
+        fab.setVisibility(View.VISIBLE);
+        fab.setBackgroundTintList(ColorStateList.valueOf(mActiveControlsWidgetColor));
+        fab.setRippleColor(ContextCompat.getColor(this, R.color.ucrop_color_fab_ripple));
+        fab.setOnClickListener(view -> {
+            // Implement your action here. For example, call cropAndSaveImage();
+            cropAndSaveImage();
+        });
     }
 
     /**
